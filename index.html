@@ -644,7 +644,7 @@
         {name:'拉萨',value:32},
         {name:'鄂尔多斯',value:32},
         {name:'西宁',value:32},
-        {name:'乌鲁木齐',value:32},
+        {name:'乌鲁木齐',value:0},
         {name:'汕头',value:32}
     ];
 
@@ -744,7 +744,7 @@
                 }
             },
             data: formtGCData(geoCoordMap, data, '北京', true)
-        }, {
+        }, /*{
 
             type: 'lines',
             zlevel: 4,
@@ -765,7 +765,7 @@
                 }
             },
             data: formtGCData(geoCoordMap, data, '北京', false)
-        }, {   //北京到各地区的
+        },*/ {   //北京到各地区的
 
             type: 'effectScatter',   //特效散点图
             coordinateSystem: 'geo',  //'cartesian2d'使用二维的直角坐标系。'geo'使用地理坐标系
@@ -791,7 +791,8 @@
             },
 
             data: formtVData(geoCoordMap, data, '北京')
-        }]
+        }
+        ]
     };
 
     // 使用刚指定的配置项和数据显示图表。
