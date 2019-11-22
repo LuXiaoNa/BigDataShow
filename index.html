@@ -23,19 +23,37 @@
             border-radius: 20px;
             font-size: xx-large;
             padding-left: 5%;
-            color: #36648B;
+            color: #33CCFF;
         }
         table{width: 350px;border-collapse: collapse;}
         #box{width:350px;height:300px;overflow: hidden;}
         th,td{width:100px;height:40px;line-height: 25px;text-align: center;color: #33CCFF;word-break : break-all;border: #33CCFF}
     </style>
 </head>
-<body style="background: url(./img/6.png);background-size: 100% 850px">
+<body style="background: url(./img/6.png);background-size: cover;background-repeat: no-repeat;">
 <div id="back">
     <!--域名危险等级饼图-->
     <div id="domain-risk" style="position: absolute;margin-top: 50px;width: 350px;height: 270px;margin-left: 2%"></div>
     <!--滚动表格-->
-    <div  style="position: absolute;width: 350px;margin-top: 25%;margin-left: 2%">
+    <div style="position: absolute;width: 350px;margin-top: 25%;margin-left: 2%">
+       <div>
+           <table>
+               <caption style="color: #3398DB;height: 30px;font-size: large;">DNS检测结果</caption>
+               <tr>
+                   <th>源IP</th>
+                   <th>目的IP</th>
+                   <th>域名</th>
+               </tr>
+           </table>
+       </div>
+        <div id="con" style="overflow: hidden; height: 240px;">
+                <table id="con1">
+                </table>
+            <div id="con2"></div>
+        </div>
+
+    </div>
+   <!-- <div  style="position: absolute;width: 350px;margin-top: 25%;margin-left: 2%">
         <table>
             <caption style="color: #3398DB;height: 30px;font-size: large;">DNS检测结果</caption>
             <tr>
@@ -46,12 +64,12 @@
         </table>
         <div id="box">
             <table id="con1">
-              <!--  <tbody id="J_tbody">
-                </tbody>-->
+              &lt;!&ndash;  <tbody id="J_tbody">
+                </tbody>&ndash;&gt;
             </table>
             <table id="con2"></table>
         </div>
-    </div>
+    </div>-->
     <div id="div1">校园网入侵检测可视化平台</div>
     <!--捕获报文-->
     <div id="baowen" style="position: absolute;width: 330px;height: 220px;margin-left: 75%;margin-top: 50px;"></div>
@@ -82,8 +100,20 @@
                 var data = result.data[0].content;
                 for (var i = 0; i < data.length; i++) {
                     var team = $('<tr></tr>');
-                    team.append('<td>' + data[i].srcIplist + '</td>');
-                    team.append('<td>' + data[i].desIplist + '</td>');
+                    var srcIpString =data[i].srcIplist.split(" ");
+                    var srcs = '<td>';
+                    for(var j=0;j<srcIpString.length;j++){
+                        srcs+=srcIpString[j]+'<br>';
+                    }
+                    srcs+='</td>';
+                    team.append(srcs);
+                    var desIpString =data[i].desIplist.split(" ");
+                    var dess = '<td>';
+                    for(var k=0;k<desIpString.length;k++){
+                        dess+=desIpString[k]+'<br>';
+                    }
+                    dess+='</td>';
+                    team.append(dess);
                     team.append('<td>' + data[i].domain + '</td>');
                     $('#con1').append(team);
                 }
@@ -95,10 +125,32 @@
             }
         });
     });
-    var box=document.getElementById("box");
+
+
+    var speed = 60;
+    con2.innerHTML = con1.innerHTML;
+    function Marquee() {
+        if (con2.offsetTop - con.scrollTop <= 0) {
+            con.scrollTop -= con2.offsetHeight;
+        } else {
+            con.scrollTop++;
+        }
+    }
+    var MyMar = setInterval(Marquee, speed);
+
+    con.onmouseover = function() {
+        clearInterval(MyMar);
+    }
+
+    demo.onmouseout = function() {
+        MyMar = setInterval(Marquee, speed);
+    }
+
+
+   /* var box=document.getElementById("box");
     var con1=document.getElementById("con1");
     var con2=document.getElementById("con2");
-    var speed=30;
+    var speed=30;  //数值越大越慢
     con2.innerHTML=con1.innerHTML;
     function  ScrollUp(){
         if( box.scrollTop>=con1.scrollHeight){
@@ -110,16 +162,16 @@
     var i=setInterval("ScrollUp()",speed);
     box.onmouseenter=function(){
         Stop()
-    }
+    };
     box.onmouseleave=function(){
         Up()
-    }
+    };
     function Stop(){
         clearInterval(i);
     }
     function Up(){
         i=setInterval("ScrollUp()",speed);
-    }
+    }*/
 </script>
 <script src="./js/jquery-2.0.3.min.js"></script>
 <script src="./js/echarts.js"></script>
