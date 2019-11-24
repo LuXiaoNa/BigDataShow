@@ -245,15 +245,14 @@
 <script src=".js/main.js"></script>
 <script type="text/javascript">
     $(function() {
-        var dateStr="2019/11/21 18:10:20";
-        var Stime=new Date(dateStr);
-       /* console.log(Stime.getTime());*/
+        var stime=new Date();
+        Stime=stime.getTime()-86400000;
         $.ajax({
             //请求方式
             type: "get",
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
-            data:{time:Stime.getTime()},
+            data:{time:Stime},
             //请求地址
             url: "http://10.3.200.130:8080/info/packageNum",
             //请求成功
@@ -264,11 +263,8 @@
                     yData.push(result['data'][i]['packageNum']/10000);
                     var date = new Date(parseInt(result['data'][i]['time']));
                     var day= date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
-                    console.log(day);
                     xData.push(day)
                 }
-                console.log(xData);
-                console.log(yData);
                 var myChart = echarts.init(document.getElementById('baowen'));
                 var option = {
                     color: ['#33CCFF'],
@@ -342,14 +338,14 @@
 <script type="text/javascript">
     $(function() {
         var dateStr = "2019/11/21 18:10:20";
-        var Stime = new Date(dateStr);
-        /* console.log(Stime.getTime());*/
+        var stime=new Date();
+        Stime=stime.getTime()-86400000;
         $.ajax({
             //请求方式
             type: "get",
             //请求的媒体类型
             contentType: "application/json;charset=UTF-8",
-            data: {time: Stime.getTime()},
+            data: {time: Stime},
             //请求地址
             url: "http://10.3.200.130:8080/info/flowNum",
             //请求成功
@@ -360,7 +356,6 @@
                     yData.push(result['data'][i]['flowNum'] / 10000);
                     var date = new Date(parseInt(result['data'][i]['time']));
                     var day = date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
-                    // console.log(day);
                     xData.push(day)
                 }
 
