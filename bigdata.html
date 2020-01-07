@@ -18,28 +18,28 @@
         #flex-item1 {
             width: 25%;
             height: 100%;
-            margin: 10px;
+            margin: 1px;
         }
      /*   域名危险等级*/
         #domain-risk{
-            width: 350px;
+            width: 100%;
             height: 270px;
             margin-top: 15%;
-            margin-left: 15%;
+            margin-left: 5%;
         }
         /*滚动表格*/
         #left2{
             width: 100%;
-            height: 80%;
+            height: 300px;
             margin-top: 10%;
-            margin-bottom: 10%;
-            margin-left: 15%;
+            /*margin-bottom: 10%;*/
+            margin-left: 5%;
         }
        /* 中间部分*/
         #flex-item2 {
             width: 55%;
             height: 100%;
-            margin: 10px;
+            margin: 1px;
         }
         /*标题样式设置*/
         #title{
@@ -51,39 +51,40 @@
             padding-left: 8%;
             color: #33CCFF;
             margin-left: 20%;
+            margin-top: 5px;
         }
         /*中国地图*/
         #map-detail{
-            width: 810px;
-            height: 820px;
-            margin-top: 30px;
+            width: 100%;
+            height: 760px;
+            margin-top: 10px;
         }
         /*右边部分*/
         #flex-item3 {
-            width: 20%;
+            width: 25%;
             height: 100%;
-            margin: 10px;
+            margin: 1px;
         }
         /*捕获报文*/
         #baowen{
-            width: 330px;
-            height: 250px;
+            width: 100%;
+            height: 230px;
             margin-top: 15%;
         }
         /*流量检测*/
         #flow{
-            width: 330px;
-            height: 250px;
+            width: 100%;
+            height: 230px;
             margin-top: 8%;
             margin-bottom: 8%;
         }
         /*威胁等级*/
         #thred{
-            width: 330px;
-            height: 250px;
+            width: 100%;
+            height: 230px;
         }
       table{width: 350px;border-collapse: collapse;}
-      th,td{width:100px;height:40px;line-height: 25px;text-align: center;color: #33CCFF;word-break : break-all;border: #33CCFF}
+      th,td{width:30%;height:40px;line-height: 25px;text-align: center;color: #33CCFF;word-break : break-all;border: #33CCFF}
     </style>
 </head>
 <body>
@@ -185,7 +186,6 @@
         }
     }
     var MyMar = setInterval(Marquee, speed);
-
     con.onmouseover = function() {
         clearInterval(MyMar);
     };
@@ -195,391 +195,6 @@
 </script>
 <script src="./js/jquery-2.0.3.min.js"></script>
 <script src="./js/echarts.js"></script>
-<!--域名危险等级饼图-->
-<script type="text/javascript">
-    $(function(){
-        $.ajax({
-            //请求方式
-            type: "get",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            //请求地址
-            url: "http://10.3.200.130:8080/info/threatLevel",
-            //请求成功
-            success: function (result) {
-                let xData = [];
-                let yData = [];
-                for (let i = 0; i < result['data'].length; i++) {
-                    xData.push(result['data'][i]['dangerLevel']);
-                    yData.push(result['data'][i]['number'])
-                }
-                var myChart = echarts.init(document.getElementById('domain-risk'));
-                var option = {
-                    title: {
-                        text: '域名危险等级',
-                        left: 'center',
-                        textStyle: {
-                            color:'#33CCFF',
-                        }
-                    },
-                    color:["#66CD00","#5CACEE","#CDCD00","#EE7942","#CD3700"],
-                    tooltip : {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        x: 'left',
-                        data:['可以忽略','一般','值得注意','危险','十分危险'],
-                        icon: 'circle',
-                        textStyle: {
-                            color: '#fff',
-                            fontSize: 12,
-                            fontFamily: 'PingFangSC',
-                            fontWeight: 300
-                        }
-                    },
-
-                    grid: {
-                        top: '30%',
-                        left: '3%',
-                        right: '2%',
-                        bottom: '4%',
-                        containLabel: true
-                    },
-                    series: [
-                        {
-                            type:'pie',
-                            radius: ['0', '70'],
-                            itemStyle: {
-                                borderColor: '#04192b',
-                                borderWidth: 1
-                            },
-                            data:[
-                                {
-                                    value:yData[0], name:'可以忽略',
-
-                                },
-                                {
-                                    value:yData[1], name:'一般',
-
-                                },
-                                {
-                                    value:yData[2], name:'值得注意',
-
-                                },
-                                {
-                                    value:yData[3], name:'危险',
-
-                                },
-                                {
-                                    value:yData[4], name:'十分危险',
-
-                                },
-                            ]
-                        }
-                    ]
-                };
-                myChart.setOption(option);
-            }
-        })
-    });
-</script>
-<!--捕获报文-->
-<script src=".js/main.js"></script>
-<script type="text/javascript">
-    $(function() {
-        var stime=new Date();
-        Stime=stime.getTime()-86400000;
-        $.ajax({
-            //请求方式
-            type: "get",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            data:{time:Stime},
-            //请求地址
-            url: "http://10.3.200.130:8080/info/packageNum",
-            //请求成功
-            success: function (result) {
-                let xData = [];
-                let yData = [];
-                for (let i = 0; i < result['data'].length; i++) {
-                    yData.push(result['data'][i]['packageNum']/10000);
-                    var date = new Date(parseInt(result['data'][i]['time']));
-                    var day= date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
-                    xData.push(day)
-                }
-                var myChart = echarts.init(document.getElementById('baowen'));
-                var option = {
-                    color: ['#33CCFF'],
-                    title: {
-                        text: '捕获报文',
-                        left: 'center',
-                        textStyle: {
-                            color:'#33CCFF',
-                        }
-                    },
-                    grid: {
-                        left: '14%',
-                        right: '2%',
-                        bottom: '1%',
-                        containLabel: true
-                    },
-                    tooltip : {
-                        trigger: 'axis',
-                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        }
-                    },
-                    xAxis : [
-                        {
-                            type : 'category',
-
-                            data : xData,
-                            axisTick: {
-                                alignWithLabel: true
-                            },
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#33CCFF',
-                                }
-                            },
-                            axisLabel: {
-                                color: '#33CCFF',
-                                /* interval:0,
-                                 rotate:40*/
-                            }
-
-                        }
-                    ],
-                    yAxis : [
-                        {
-                            type : 'value',
-                            name: '数量(个)',
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#33CCFF',
-                                }
-                            },
-                        }
-                    ],
-                    series : [
-                        {
-
-                            type:'bar',
-                            barWidth: '50%',
-                            data:yData
-                        }
-                    ]
-                };
-
-                myChart.setOption(option);
-            }
-        });
-    });
-</script>
-<!-- 流量检测-->
-<script type="text/javascript">
-    $(function() {
-        var dateStr = "2019/11/21 18:10:20";
-        var stime=new Date();
-        Stime=stime.getTime()-86400000;
-        $.ajax({
-            //请求方式
-            type: "get",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            data: {time: Stime},
-            //请求地址
-            url: "http://10.3.200.130:8080/info/flowNum",
-            //请求成功
-            success: function (result) {
-                let xData = [];
-                let yData = [];
-                for (let i = 0; i < result['data'].length; i++) {
-                    yData.push(result['data'][i]['flowNum'] / 10000);
-                    var date = new Date(parseInt(result['data'][i]['time']));
-                    var day = date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
-                    xData.push(day)
-                }
-
-                var myChart = echarts.init(document.getElementById('flow'));
-                var option = {
-                    color: ['#3398DB'],
-                    title: {
-                        text: '流量检测',
-                        left: 'center',
-                        textStyle: {
-                            color:'#33CCFF',
-                        }
-                    },
-                    grid: {
-                        left: '14%',
-                        right: '2%',
-                        bottom: '1%',
-                        containLabel: true
-                    },
-                    tooltip : {
-                        trigger: 'axis',
-                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        }
-                    },
-                    xAxis : [
-                        {
-                            type : 'category',
-
-                            data : xData,
-                            axisTick: {
-                                alignWithLabel: true
-                            },
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#3398DB',
-                                }
-                            },
-                            axisLabel: {
-                                color: '#3398DB',
-                                /*interval:0,
-                                rotate:80*/
-                            }
-
-                        }
-                    ],
-                    yAxis : [
-                        {
-                            type : 'value',
-                            name: '流量(M)',
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#3398DB',
-                                }
-                            },
-                        }
-                    ],
-                    series : [
-                        {
-
-                            type:'bar',
-                            barWidth: '50%',
-                            data:yData
-                        }
-                    ]
-                };
-                myChart.setOption(option);
-
-            }
-        })
-    });
-</script>
-<!-- 威胁等级-->
-<script type="text/javascript">
-    $(function() {
-        $.ajax({
-            //请求方式
-            type: "get",
-            //请求的媒体类型
-            contentType: "application/json;charset=UTF-8",
-            //请求地址
-            url: "http://10.3.200.130:8080/info/threatLevelNum",
-            //请求成功
-            success: function (result) {
-                let xData = [];
-                let yData1 = [];
-                let yData2 = [];
-                xData.push(result['data'][0]['type']);
-                for (let i = 0; i < result['data'].length; i++) {
-                    yData1.push(result['data'][i]['level'][0]);
-                    yData2.push(result['data'][i]['level'][1]);
-                }
-                var myChart = echarts.init(document.getElementById('thred'));
-                var option={
-                    title: {
-                        text: '威胁等级',
-                        left: 'center',
-                        textStyle: {
-                            color:'#33CCFF',
-                        }
-                    },
-                    tooltip : {
-                        trigger: 'axis',
-                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                        }
-                    },
-                    legend: {
-                        data:['木马','DNS'],
-                        left: 'right',
-                        textStyle: {
-                            color: '#3398DB',
-                        }
-                    },
-                    grid: {
-                        left: '14%',
-                        right: '2%',
-                        bottom: '1%',
-                        containLabel: true
-                    },
-                    xAxis : [
-                        {
-                            type : 'category',
-                            data:['可以忽略','一般','值得注意','危险','十分危险'],
-                            splitLine: {
-                                show: false
-                            },
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#3398DB',
-                                }
-                            },
-                            axisLabel: {
-                                color: '#3398DB',
-                                /* interval:0,
-                                 rotate:80*/
-                            },
-                        }
-                    ],
-                    yAxis : [
-                        {
-                            name: '流量(M)',
-                            type : 'value',
-                            axisLine: {
-                                lineStyle: {
-                                    color: '#3398DB',
-                                }
-                            },
-                            splitLine: {
-                                show: false
-                            },
-                        }
-                    ],
-                    series : [
-                        {
-                            name:'木马',
-                            type:'bar',
-                            stack:'威胁',
-                            data:yData1[0],
-                            itemStyle:{
-                                normal:{color:"#CD3700"},
-                            }
-                        },
-                        {
-                            name:'DNS',
-                            type:'bar',
-                            stack:'威胁',
-                            data:yData2[0],
-                            itemStyle:{
-                                normal:{color:"#CDCD00"},
-                            }
-                        },
-                    ]
-                };
-                myChart.setOption(option);
-
-            }
-        })
-    });
-</script>
 <!-- 加载中国地图 -->
 <script src="./js/map/china.js"></script>
 <script>
@@ -592,8 +207,6 @@
     });
 </script>
 <script type="text/javascript">
-    var myChart = echarts.init(document.getElementById('map-detail'));
-
     var geoCoordMap = {
         '北京': [116.46,39.92],
         '平谷': [117.1,40.13],
@@ -2859,6 +2472,12 @@
         '吴县': [120.62,31.32],
         '吴江': [120.63,31.16]
     };
+    var myChart = echarts.init(document.getElementById('domain-risk'));
+    var myChart1 = echarts.init(document.getElementById('baowen'));
+    var myChart2 = echarts.init(document.getElementById('flow'));
+    var myChart3 = echarts.init(document.getElementById('thred'));
+    var myChart4 = echarts.init(document.getElementById('map-detail'));
+    /* 中国地图*/
     $(function(){
         //请求参数
         var list = {};
@@ -2952,6 +2571,7 @@
                     return tGeoDt;
                 }
                 var planePath = 'arrow';
+
                 option = {
                     geo: {    //地理坐标系
                         map: 'china',      //地图类型。world世界地图，china中国地图
@@ -2960,7 +2580,7 @@
                                 show: false
                             }
                         },
-                        zoom:1.25,      //当前视角的缩放比例,即地图的大小
+                        zoom:1.2,      //当前视角的缩放比例,即地图的大小
                         roam: true,  //是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移，可以设置成 'scale' 或者 'move'。设置成 true 为都开启
                         /* silent: true,*/  //图形是否不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件。
                         itemStyle: {    //地图区域的多边形 图形样式
@@ -3085,7 +2705,7 @@
                 };
                 // console.log(option.series[1])
                 // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
+                myChart4.setOption(option);
             },
             //请求失败，包含具体的错误信息
             error : function(e){
@@ -3094,6 +2714,385 @@
             }
         });
     });
+    <!--域名危险等级饼图-->
+    $(function(){
+        $.ajax({
+            //请求方式
+            type: "get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url: "http://10.3.200.130:8080/info/threatLevel",
+            //请求成功
+            success: function (result) {
+                let xData = [];
+                let yData = [];
+                for (let i = 0; i < result['data'].length; i++) {
+                    xData.push(result['data'][i]['dangerLevel']);
+                    yData.push(result['data'][i]['number'])
+                }
+
+                var option = {
+                    title: {
+                        text: '域名危险等级',
+                        left: 'center',
+                        textStyle: {
+                            color:'#33CCFF',
+                        }
+                    },
+                    color:["#66CD00","#5CACEE","#CDCD00","#EE7942","#CD3700"],
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data:['可以忽略','一般','值得注意','危险','十分危险'],
+                        icon: 'circle',
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 12,
+                            fontFamily: 'PingFangSC',
+                            fontWeight: 300
+                        }
+                    },
+
+                    grid: {
+                        top: '30%',
+                        left: '3%',
+                        right: '2%',
+                        bottom: '4%',
+                        containLabel: true
+                    },
+                    series: [
+                        {
+                            type:'pie',
+                            radius: ['0', '70'],
+                            itemStyle: {
+                                borderColor: '#04192b',
+                                borderWidth: 1
+                            },
+                            data:[
+                                {
+                                    value:yData[0], name:'可以忽略',
+
+                                },
+                                {
+                                    value:yData[1], name:'一般',
+
+                                },
+                                {
+                                    value:yData[2], name:'值得注意',
+
+                                },
+                                {
+                                    value:yData[3], name:'危险',
+
+                                },
+                                {
+                                    value:yData[4], name:'十分危险',
+
+                                },
+                            ]
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            }
+        })
+    });
+    <!--捕获报文-->
+    $(function() {
+        var stime=new Date();
+        Stime=stime.getTime()-86400000;
+        $.ajax({
+            //请求方式
+            type: "get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            data:{time:Stime},
+            //请求地址
+            url: "http://10.3.200.130:8080/info/packageNum",
+            //请求成功
+            success: function (result) {
+                let xData = [];
+                let yData = [];
+                for (let i = 0; i < result['data'].length; i++) {
+                    yData.push(result['data'][i]['packageNum']/10000);
+                    var date = new Date(parseInt(result['data'][i]['time']));
+                    var day= date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
+                    xData.push(day)
+                }
+
+                var option = {
+                    color: ['#33CCFF'],
+                    title: {
+                        text: '捕获报文',
+                        left: 'left',
+                        textStyle: {
+                            color:'#33CCFF',
+                        }
+                    },
+                    grid: {
+                        left: '14%',
+                        right: '2%',
+                        bottom: '1%',
+                        containLabel: true
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+
+                            data : xData,
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#33CCFF',
+                                }
+                            },
+                            axisLabel: {
+                                color: '#33CCFF',
+                                /* interval:0,
+                                 rotate:40*/
+                            }
+
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name: '数量(个)',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#33CCFF',
+                                }
+                            },
+                        }
+                    ],
+                    series : [
+                        {
+                            type:'bar',
+                            barWidth: '50%',
+                            data:yData
+                        }
+                    ]
+                };
+                myChart1.setOption(option);
+            }
+        });
+    });
+    <!-- 流量检测-->
+    $(function() {
+        var stime=new Date();
+        Stime=stime.getTime()-86400000;
+        $.ajax({
+            //请求方式
+            type: "get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            data: {time: Stime},
+            //请求地址
+            url: "http://10.3.200.130:8080/info/flowNum",
+            //请求成功
+            success: function (result) {
+                let xData = [];
+                let yData = [];
+                for (let i = 0; i < result['data'].length; i++) {
+                    yData.push(result['data'][i]['flowNum'] / 10000);
+                    var date = new Date(parseInt(result['data'][i]['time']));
+                    var day = date.toJSON().substr(0, 19).replace('T', ' ').replace(/-/g, '.');
+                    xData.push(day)
+                }
+                var option = {
+                    color: ['#3398DB'],
+                    title: {
+                        text: '流量检测',
+                        left: 'left',
+                        textStyle: {
+                            color:'#33CCFF',
+                        }
+                    },
+                    grid: {
+                        left: '14%',
+                        right: '2%',
+                        bottom: '1%',
+                        containLabel: true
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+
+                            data : xData,
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#3398DB',
+                                }
+                            },
+                            axisLabel: {
+                                color: '#3398DB',
+                                /*interval:0,
+                                rotate:80*/
+                            }
+
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            name: '流量(M)',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#3398DB',
+                                }
+                            },
+                        }
+                    ],
+                    series : [
+                        {
+
+                            type:'bar',
+                            barWidth: '50%',
+                            data:yData
+                        }
+                    ]
+                };
+                myChart2.setOption(option);
+
+            }
+        })
+    });
+    <!-- 威胁等级-->
+    $(function() {
+        $.ajax({
+            //请求方式
+            type: "get",
+            //请求的媒体类型
+            contentType: "application/json;charset=UTF-8",
+            //请求地址
+            url: "http://10.3.200.130:8080/info/threatLevelNum",
+            //请求成功
+            success: function (result) {
+                let xData = [];
+                let yData1 = [];
+                let yData2 = [];
+                xData.push(result['data'][0]['type']);
+                for (let i = 0; i < result['data'].length; i++) {
+                    yData1.push(result['data'][i]['level'][0]);
+                    yData2.push(result['data'][i]['level'][1]);
+                }
+                var option={
+                    title: {
+                        text: '威胁等级',
+                        left: 'left',
+                        textStyle: {
+                            color:'#33CCFF',
+                        }
+                    },
+                    tooltip : {
+                        trigger: 'axis',
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                        }
+                    },
+                    legend: {
+                        data:['木马','DNS'],
+                        left: 'right',
+                        textStyle: {
+                            color: '#3398DB',
+                        }
+                    },
+                    grid: {
+                        left: '14%',
+                        right: '2%',
+                        bottom: '1%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data:['可以忽略','一般','值得注意','危险','十分危险'],
+                            splitLine: {
+                                show: false
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#3398DB',
+                                }
+                            },
+                            axisLabel: {
+                                color: '#3398DB',
+                                /* interval:0,
+                                 rotate:80*/
+                            },
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            name: '流量(M)',
+                            type : 'value',
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#3398DB',
+                                }
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'木马',
+                            type:'bar',
+                            stack:'威胁',
+                            data:yData1[0],
+                            itemStyle:{
+                                normal:{color:"#CD3700"},
+                            }
+                        },
+                        {
+                            name:'DNS',
+                            type:'bar',
+                            stack:'威胁',
+                            data:yData2[0],
+                            itemStyle:{
+                                normal:{color:"#CDCD00"},
+                            }
+                        },
+                    ]
+                };
+                myChart3.setOption(option);
+
+            }
+        })
+    });
+    $(window).resize(function() {
+        myChart.resize();
+        myChart1.resize();
+        myChart2.resize();
+        myChart3.resize();
+        myChart4.resize();
+    });
+
 </script>
+
 </body>
 </html>
