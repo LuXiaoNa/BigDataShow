@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style type="text/css">
+   /*水平居中是指在水平方向上处于中间的位置。 垂直居中是指在垂直方向上处于中间的位置.里面的div相对于外面的div*/
+   /* 垂直居中方法一  absolute + margin: auto*/
+     /*.outer{
+         position:relative;
+         background: aquamarine;
+         height: 300px;
+         width: 500px;
+     }
+    .inner{
+        position:absolute;  !*当元素设置为position: absolute之后，margin: auto 就会失效。但是当同时设置 top 和 bottom时，又会生效*!
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        height:80px;
+        margin:auto;
+        background: #3398DB;
+
+    }*/
+   /* 垂直居中方法二absolute+translate（推荐）,优点： 可适应外层容器的任意高度。简单，容易理解。*/
+    /*.outer{
+        position:relative;
+        width: 300px;
+        height:300px;
+        background: #33CCFF;
+    }
+    .inner{
+        position:absolute;
+        top:50%;   !*绝对定位元素，相对自身向上偏移50%*!
+        transform:translate(0,-50%);   !*是相对于元素自身偏移的*!
+        background: aqua;
+    }*/
+
+   /*垂直居中方法三::before + inline-block + vertical-align: middel （推荐）优点： 可适应外层容器的任意高度。*/
+  /* .outer {
+       width: 300px;
+       height: 300px;
+       background: #33CCFF;
+   }
+
+   .outer::before {
+       content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+   }
+
+   .inner {
+        display: inline-block;
+        vertical-align: middle;
+        background: aqua;
+   }*/
+
+  /* 垂直居中方法四 利用Flex或Grid布局 Flex / Grid + align-self: center*/
+    .outer{
+        display:flex;
+        width:300px;
+        height:300px;
+        background: #33CCFF;
+    }
+    .inner{
+        align-self:center;
+        background: aqua;
+    }
+
+ /*  水平垂直均居中方法五   Flex / Grid + margin: auto*/
+   .outer{
+       display:flex;
+       width:300px;
+       height:300px;
+       background: #33CCFF;
+   }
+   .inner{
+       margin: auto;
+       background: aqua;
+   }
+
+/*   文本文字垂直居中*/
+   .wenzi{
+       width:300px;
+       height:300px;
+       background: brown;
+       line-height:300px;
+   }
+    .shuiping{
+        width:300px;
+        height:300px;
+        background:fuchsia;
+        text-align:center;   /* 设置文本文字水平居中*/
+        line-height:300px;
+        margin:0 auto ;   /* 设置div水平居中*/
+    }
+
+</style>
+
+<div class="outer">
+    <div class="inner">
+        <p>div盒子容器垂直居中</p>
+        <p>div盒子容器垂直居中</p>
+    </div>
+</div>
+<div class="wenzi">文本文字垂直居中</div>
+<div class="shuiping">div文本文字水平垂直居中</div>
+</body>
+</html>

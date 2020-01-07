@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+<div>
+    <p id="a"></p>
+    <p id="b"></p>
+</div>
+   <script>
+       /*var person=new Object();
+       person.name="luxinjuan";
+       person.age=26;
+       person.sex='女';
+       person.xueli="研究生";*/
+       var person={
+           firstName:"lu",
+           lastName:"xinjuan",
+           age :26,
+           sex:"女",
+           language:"en",
+           fullName:function(){
+               return this.firstName.toUpperCase()+" "+this.lastName;
+           },
+           get lang(){      //get对象访问器,获取属性
+               return this.language;
+           },
+           set lang(value){         //set设置属性
+               this.language = value;
+           }
+       };
+       person.lang="zh";
+       person.name=function(){    //添加新方法
+          return this.firstName+" "+this.lastName;
+       };
+       Object.defineProperty(person,"age",{value:"25"});     //更改属性值
+       Object.defineProperty(person,"year",{value:"1993.1.11"});   //添加属性
+      var lastperson=Object.keys(person);        //返回可枚举属性的数组
+
+       /*var x;
+       txt="";*/
+       /* person={name:"luxinjuan",age:20,};*/
+       delete person.age;    //删除属性，不会删除被继承的属性，但是如果您删除了某个原型属性，则将影响到所有从原型继承的对象。
+      /* for(x in person){     //循环属性
+           txt+=person[x]+" ";
+       }*/
+
+       /* document.getElementById("a").innerHTML=person.name+"是一个"+person.age+"的漂亮"+person.sex+"生"*/
+       /* document.getElementById("a").innerHTML=txt;*/
+        document.getElementById("a").innerHTML=person.fullName()+" "+person.sex+"    "+person.name()+"  get获取属性："+person.lang+" set设置属性："
+            +person.language+"出生日期："+person.year+" "+lastperson;
+
+   //函数构造器
+   function Person(first,last,age,eye,fullName){
+       this.firstName=first;
+       this.lastName=last;
+       this.age=age;
+       this.eyeColor=eye;
+       this.fullName=fullName;
+   }
+   Person.prototype.nationality="China";   //JavaScript prototype 属性允许您为对象构造器添加新属性
+   Person.prototype.name=function () {     //JavaScript prototype 属性也允许您为对象构造器添加新方法：
+       return this.firstName+this.lastName
+   };
+
+
+   //创建一个新的对象
+   var myFriend= new Person("Bill","Gates",26,"blue","Bill Gates");
+     /*  myFriend.nationality="English";   //为对象添加属性
+       myFriend.name=function(){        //向对象添加方法
+           return this.firstName+ " " +this.lastName;
+       };*/
+       document.getElementById("b").innerHTML=myFriend.fullName+" "+myFriend.age+"添加的一个属性："+myFriend.nationality+" "+myFriend.eyeColor+"添加的方法："+myFriend.name()
+
+   </script>
+</body>
+</html>

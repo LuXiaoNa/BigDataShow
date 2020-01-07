@@ -6,81 +6,125 @@
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <title>校园网入侵检测可视化平台</title>
     <style type="text/css">
-        #back{
-           /* background-color: black;*/
-            position:relative;
+      /*  父级div*/
+        #flex-container {
+            display: -webkit-flex;
+            display: flex;
             width: 100%;
             height: 100%;
-          /*  display: flex;
-            display: -webkit-flex;*/
+            background-color: #063965;
         }
-        #div1{
-           /* background: url(./img/背景图.jpeg);*/
-            position: absolute;
-            margin-left: 34%;
-            margin-top: 10px;
+        /*左边部分*/
+        #flex-item1 {
+            width: 25%;
+            height: 100%;
+            margin: 10px;
+        }
+     /*   域名危险等级*/
+        #domain-risk{
+            width: 350px;
+            height: 270px;
+            margin-top: 15%;
+            margin-left: 15%;
+        }
+        /*滚动表格*/
+        #left2{
+            width: 100%;
+            height: 80%;
+            margin-top: 10%;
+            margin-bottom: 10%;
+            margin-left: 15%;
+        }
+       /* 中间部分*/
+        #flex-item2 {
+            width: 55%;
+            height: 100%;
+            margin: 10px;
+        }
+        /*标题样式设置*/
+        #title{
             width: 450px;
             box-shadow: 5px 5px 3px #3398DB;
             border:2px solid #3398DB;
             border-radius: 20px;
             font-size: xx-large;
-            padding-left: 5%;
+            padding-left: 8%;
             color: #33CCFF;
+            margin-left: 20%;
         }
-        table{width: 350px;border-collapse: collapse;}
-     /*   #box{width:350px;height:300px;overflow: hidden;}*/
-        th,td{width:100px;height:40px;line-height: 25px;text-align: center;color: #33CCFF;word-break : break-all;border: #33CCFF}
+        /*中国地图*/
+        #map-detail{
+            width: 810px;
+            height: 820px;
+            margin-top: 30px;
+        }
+        /*右边部分*/
+        #flex-item3 {
+            width: 20%;
+            height: 100%;
+            margin: 10px;
+        }
+        /*捕获报文*/
+        #baowen{
+            width: 330px;
+            height: 250px;
+            margin-top: 15%;
+        }
+        /*流量检测*/
+        #flow{
+            width: 330px;
+            height: 250px;
+            margin-top: 8%;
+            margin-bottom: 8%;
+        }
+        /*威胁等级*/
+        #thred{
+            width: 330px;
+            height: 250px;
+        }
+      table{width: 350px;border-collapse: collapse;}
+      th,td{width:100px;height:40px;line-height: 25px;text-align: center;color: #33CCFF;word-break : break-all;border: #33CCFF}
     </style>
 </head>
-<body style="background: url(./img/6.png);background-size: cover;background-repeat: no-repeat;">
-<div id="back">
-    <!--域名危险等级饼图-->
-    <div id="domain-risk" style="position: absolute;margin-top: 50px;width: 350px;height: 270px;margin-left: 2%"></div>
-    <!--滚动表格-->
-    <div style="position: absolute;width: 350px;margin-top: 25%;margin-left: 2%">
-       <div>
-           <table>
-               <caption style="color: #3398DB;height: 30px;font-size: large;">DNS检测结果</caption>
-               <tr>
-                   <th>源IP</th>
-                   <th>目的IP</th>
-                   <th>域名</th>
-               </tr>
-           </table>
-       </div>
-        <div id="con" style="overflow: hidden; height: 240px;">
+<body>
+<div id="flex-container">
+    <!--左边部分-->
+    <div id="flex-item1">
+        <!--域名危险等级饼图-->
+        <div id="domain-risk"></div>
+        <!--滚动表格-->
+        <div id="left2">
+            <div>
+                <table>
+                    <caption style="color: #33CCFF;height: 30px;font-size: large;font-weight:bold;">DNS检测结果</caption>
+                    <tr>
+                        <th>源IP</th>
+                        <th>目的IP</th>
+                        <th>域名</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="con" style="overflow: hidden; height: 240px;">
                 <table id="con1">
                 </table>
-            <div id="con2"></div>
+                <div id="con2"></div>
+            </div>
         </div>
-
     </div>
-   <!-- <div  style="position: absolute;width: 350px;margin-top: 25%;margin-left: 2%">
-        <table>
-            <caption style="color: #3398DB;height: 30px;font-size: large;">DNS检测结果</caption>
-            <tr>
-                <th>源IP</th>
-                <th>目的IP</th>
-                <th>域名</th>
-            </tr>
-        </table>
-        <div id="box">
-            <table id="con1">
-              &lt;!&ndash;  <tbody id="J_tbody">
-                </tbody>&ndash;&gt;
-            </table>
-            <table id="con2"></table>
-        </div>
-    </div>-->
-    <div id="div1">校园网入侵检测可视化平台</div>
-    <!--捕获报文-->
-    <div id="baowen" style="position: absolute;width: 330px;height: 220px;margin-left: 75%;margin-top: 50px;"></div>
-    <!--地图-->
-    <div id="map-detail" style="position:absolute;margin-left: 27%;margin-top:10%;width: 710px;height: 620px;border:2px solid #3398DB;border-radius:25px;"></div>
-    <!--流量检测-->
-    <div id="flow" style="position: absolute;margin-top: 20%;margin-left: 75%;width: 330px;height: 220px;"></div>
-    <!--威胁等级-->
-    <div id="thred" style="position: absolute;margin-top: 38%;margin-left: 75%;width:330px;height: 220px;"></div>
+    <!--中间部分-->
+    <div id="flex-item2">
+        <div id="title">校园网入侵检测可视化平台</div>
+        <div id="map-detail">地图</div>
+    </div>
+   <!-- 右边部分-->
+    <div id="flex-item3">
+        <!--捕获报文-->
+        <div  id="baowen"></div>
+       <!-- 流量检测-->
+        <div  id="flow"></div>
+       <!-- 威胁等级-->
+        <div  id="thred"></div>
+    </div>
 </div>
 <!--设置滚动表格-->
 <script type="text/javascript">
@@ -127,8 +171,6 @@
             }
         });
     });
-
-
     var speed = 60;
     con2.innerHTML = con1.innerHTML;
     function Marquee() {
@@ -177,7 +219,7 @@
                         text: '域名危险等级',
                         left: 'center',
                         textStyle: {
-                            color:'#3398DB',
+                            color:'#33CCFF',
                         }
                     },
                     color:["#66CD00","#5CACEE","#CDCD00","#EE7942","#CD3700"],
@@ -304,8 +346,8 @@
                             },
                             axisLabel: {
                                 color: '#33CCFF',
-                               /* interval:0,
-                                rotate:40*/
+                                /* interval:0,
+                                 rotate:40*/
                             }
 
                         }
@@ -368,7 +410,7 @@
                         text: '流量检测',
                         left: 'center',
                         textStyle: {
-                            color:'#3398DB',
+                            color:'#33CCFF',
                         }
                     },
                     grid: {
@@ -407,7 +449,7 @@
                     yAxis : [
                         {
                             type : 'value',
-                            name: '数量(个)',
+                            name: '流量(M)',
                             axisLine: {
                                 lineStyle: {
                                     color: '#3398DB',
@@ -456,7 +498,7 @@
                         text: '威胁等级',
                         left: 'center',
                         textStyle: {
-                            color:'#3398DB',
+                            color:'#33CCFF',
                         }
                     },
                     tooltip : {
@@ -492,14 +534,14 @@
                             },
                             axisLabel: {
                                 color: '#3398DB',
-                               /* interval:0,
-                                rotate:80*/
+                                /* interval:0,
+                                 rotate:80*/
                             },
                         }
                     ],
                     yAxis : [
                         {
-                            name: '数量(个)',
+                            name: '流量(M)',
                             type : 'value',
                             axisLine: {
                                 lineStyle: {
@@ -2918,7 +2960,7 @@
                                 show: false
                             }
                         },
-                        zoom:1.2,      //当前视角的缩放比例,即地图的大小
+                        zoom:1.25,      //当前视角的缩放比例,即地图的大小
                         roam: true,  //是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移，可以设置成 'scale' 或者 'move'。设置成 true 为都开启
                         /* silent: true,*/  //图形是否不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件。
                         itemStyle: {    //地图区域的多边形 图形样式
